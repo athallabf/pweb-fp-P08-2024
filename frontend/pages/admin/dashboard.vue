@@ -33,35 +33,35 @@
       </div>
 
       <!-- Quick Navigation -->
-      <div class="bg-gray-800 rounded-xl shadow-lg p-5 border border-gray-700">
-        <h2 class="text-xl font-semibold mb-4 text-gray-100 flex items-center">
-          <span class="material-icons-outlined mr-2 text-blue-400">speed</span>
+      <div class="bg-sky-100 rounded-xl shadow-lg p-5">
+        <h2 class="text-xl font-semibold mb-4 text-sky-700 flex items-center">
+          <span class="material-icons-outlined mr-2 text-sky-700">speed</span>
           Quick Access
         </h2>
         <div class="grid grid-cols-2 gap-4">
           <router-link
             to="/admin/laporan/fasilitas"
-            class="flex items-center p-4 bg-gray-700/50 rounded-lg hover:bg-gray-700 transition-colors group"
+            class="flex items-center p-4 bg-sky-700/50 rounded-lg hover:bg-sky-700 transition-colors group"
           >
             <span
-              class="material-icons-outlined text-gray-400 group-hover:text-blue-400 mr-2"
+              class="material-icons-outlined text-sky-900 group-hover:text-gray-100 mr-2"
             >
               build
             </span>
-            <span class="text-gray-300 group-hover:text-gray-100"
+            <span class="text-sky-900 group-hover:text-gray-100"
               >Laporan Fasilitas</span
             >
           </router-link>
           <router-link
             to="/admin/laporan/penghuni"
-            class="flex items-center p-4 bg-gray-700/50 rounded-lg hover:bg-gray-700 transition-colors group"
+            class="flex items-center p-4 bg-sky-700/50 rounded-lg hover:bg-sky-700 transition-colors group"
           >
             <span
-              class="material-icons-outlined text-gray-400 group-hover:text-blue-400 mr-2"
+              class="material-icons-outlined text-sky-900 group-hover:text-gray-100 mr-2"
             >
               people
             </span>
-            <span class="text-gray-300 group-hover:text-gray-100"
+            <span class="text-sky-900 group-hover:text-gray-100"
               >Laporan Penghuni</span
             >
           </router-link>
