@@ -4,8 +4,8 @@
 | Nama | NRP |
 |----------------------------|------------|
 |Athalla Barka Fadhil| 5027231018 |
-|Nayyara Ashila| 50272210xx |
-|Adlya Isriena Aftarisya | 50272310xx |
+|Nayyara Ashila| 5027221083 |
+|Adlya Isriena Aftarisya | 5027231066 |
 
 ## Start
 
