@@ -4,7 +4,7 @@
       <div class="flex justify-center space-x-6 mb-6">
         <!-- GitHub -->
         <a
-          href="https://github.com/rrayyaann/pweb-fp-P08-2024"
+          href="https://github.com/athallabf/pweb-fp-P08-2024"
           target="_blank"
           class="text-gray-400 hover:text-gray-100 transition-colors"
           title="GitHub Repository"
