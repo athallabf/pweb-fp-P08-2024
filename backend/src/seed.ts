@@ -55,11 +55,6 @@ const seedDatabase = async () => {
     // Seed Regular Users
     const users = [
       {
-        username: "ray",
-        password: await bcrypt.hash("ray123", 10),
-        role: "USER",
-      },
-      {
         username: "athalla",
         password: await bcrypt.hash("athalla", 10),
         role: "USER",
