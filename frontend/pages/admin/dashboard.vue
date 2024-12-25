@@ -1,88 +1,164 @@
 <template>
-  <div class="p-6 bg-[#f8f9fa] min-h-screen">
-    <h1 class="text-3xl font-bold mb-6 text-[#789DBC]">Dashboard Admin</h1>
+  <div class="p-6 bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen">
+    <h1 class="text-3xl font-bold mb-8 text-gray-100 flex items-center">
+      <span class="material-icons-outlined mr-3 text-blue-400">dashboard</span>
+      Dashboard Admin
+    </h1>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <!-- Room Occupancy -->
-      <div class="p-4 bg-white rounded-lg shadow">
-        <h2 class="text-xl font-semibold mb-4 text-[#789DBC]">Room Occupancy</h2>
-        <p><strong>Empty Rooms:</strong> {{ roomOccupancy.empty }}</p>
-        <p><strong>Filled Rooms:</strong> {{ roomOccupancy.filled }}</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <!-- Room Occupancy Stats -->
+      <div class="bg-gray-800 rounded-xl shadow-lg p-5 border border-gray-700">
+        <h2 class="text-xl font-semibold mb-4 text-gray-100 flex items-center">
+          <span class="material-icons-outlined mr-2 text-blue-400"
+            >apartment</span
+          >
+          Room Occupancy
+        </h2>
+        <div class="grid grid-cols-2 gap-4">
+          <div
+            class="bg-green-900/30 rounded-lg p-4 border border-green-500/30"
+          >
+            <p class="text-green-400 text-sm mb-1">Empty Rooms</p>
+            <p class="text-2xl font-bold text-green-300">
+              {{ roomOccupancy.empty }}
+            </p>
+          </div>
+          <div class="bg-blue-900/30 rounded-lg p-4 border border-blue-500/30">
+            <p class="text-blue-400 text-sm mb-1">Filled Rooms</p>
+            <p class="text-2xl font-bold text-blue-300">
+              {{ roomOccupancy.filled }}
+            </p>
+          </div>
+        </div>
       </div>
 
-      <!-- Navigation to Reports -->
-      <div class="p-4 bg-white rounded-lg shadow">
-        <h2 class="text-xl font-semibold mb-4 text-[#789DBC]">Reports</h2>
-        <router-link
-          to="/admin/laporan/fasilitas"
-          class="block text-blue-500 hover:underline mb-2"
-        >
-          Laporan Fasilitas
-        </router-link>
-        <router-link
-          to="/admin/laporan/penghuni"
-          class="block text-blue-500 hover:underline"
-        >
-          Laporan Penghuni
-        </router-link>
+      <!-- Quick Navigation -->
+      <div class="bg-gray-800 rounded-xl shadow-lg p-5 border border-gray-700">
+        <h2 class="text-xl font-semibold mb-4 text-gray-100 flex items-center">
+          <span class="material-icons-outlined mr-2 text-blue-400">speed</span>
+          Quick Access
+        </h2>
+        <div class="grid grid-cols-2 gap-4">
+          <router-link
+            to="/admin/laporan/fasilitas"
+            class="flex items-center p-4 bg-gray-700/50 rounded-lg hover:bg-gray-700 transition-colors group"
+          >
+            <span
+              class="material-icons-outlined text-gray-400 group-hover:text-blue-400 mr-2"
+            >
+              build
+            </span>
+            <span class="text-gray-300 group-hover:text-gray-100"
+              >Laporan Fasilitas</span
+            >
+          </router-link>
+          <router-link
+            to="/admin/laporan/penghuni"
+            class="flex items-center p-4 bg-gray-700/50 rounded-lg hover:bg-gray-700 transition-colors group"
+          >
+            <span
+              class="material-icons-outlined text-gray-400 group-hover:text-blue-400 mr-2"
+            >
+              people
+            </span>
+            <span class="text-gray-300 group-hover:text-gray-100"
+              >Laporan Penghuni</span
+            >
+          </router-link>
+        </div>
       </div>
     </div>
 
     <!-- Room List -->
-    <div class="mt-8">
-      <h2 class="text-xl font-semibold mb-4 text-[#789DBC]">Room List</h2>
-      <div v-if="errorMessageRooms" class="text-red-500 mb-4">{{ errorMessageRooms }}</div>
-      <div v-if="rooms.length === 0" class="text-gray-500">No rooms available</div>
-      <div v-else class="grid grid-cols-1 md:grid-cols-5 gap-4">
-        <!-- Individual Room Box -->
+    <div
+      class="bg-gray-800 rounded-xl shadow-lg p-5 mb-8 border border-gray-700"
+    >
+      <h2 class="text-xl font-semibold mb-4 text-gray-100 flex items-center">
+        <span class="material-icons-outlined mr-2 text-blue-400"
+          >meeting_room</span
+        >
+        Room List
+      </h2>
+      <div
+        v-if="errorMessageRooms"
+        class="p-4 mb-4 text-red-400 bg-red-900/30 border border-red-500/30 rounded-lg"
+      >
+        {{ errorMessageRooms }}
+      </div>
+      <div v-if="rooms.length === 0" class="text-gray-400 text-center py-8">
+        No rooms available
+      </div>
+      <div
+        v-else
+        class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4"
+      >
         <div
           v-for="room in rooms"
           :key="room._id"
-          class="p-4 bg-white rounded-lg shadow flex flex-col items-center"
+          class="bg-gray-700/50 rounded-lg p-4 border border-gray-600 hover:border-gray-500 transition-colors"
         >
-          <p class="text-lg font-semibold">Room {{ room.room_number }}</p>
-          <p
-            class="text-sm font-medium mt-2"
-            :class="room.status === 'EMPTY' ? 'text-green-500' : 'text-red-500'"
-          >
-            {{ room.status }}
+          <div class="flex items-center justify-between mb-2">
+            <span class="material-icons-outlined text-gray-400"
+              >door_front</span
+            >
+            <span
+              :class="{
+                'px-2 py-1 text-xs rounded-full': true,
+                'bg-green-900/50 text-green-400 border border-green-500/30':
+                  room.status === 'EMPTY',
+                'bg-red-900/50 text-red-400 border border-red-500/30':
+                  room.status === 'FILLED',
+              }"
+            >
+              {{ room.status }}
+            </span>
+          </div>
+          <p class="text-lg font-medium text-gray-100">
+            Room {{ room.room_number }}
           </p>
         </div>
       </div>
     </div>
-    
+
     <!-- Registered Users -->
-    <div class="mt-8">
-      <h2 class="text-xl font-semibold mb-4 text-[#789DBC]">Registered Users</h2>
-      <div v-if="errorMessage" class="text-red-500 mb-4">{{ errorMessage }}</div>
-      <div v-if="users.length === 0" class="text-gray-500">No registered users</div>
-      <div v-else class="grid grid-cols-1 md:grid-cols-3 gap-4 place-items-center">
-        
-        <!-- Individual User Box -->
+    <div class="bg-gray-800 rounded-xl shadow-lg p-5 border border-gray-700">
+      <h2 class="text-xl font-semibold mb-4 text-gray-100 flex items-center">
+        <span class="material-icons-outlined mr-2 text-blue-400">group</span>
+        Registered Users
+      </h2>
+      <div
+        v-if="errorMessage"
+        class="p-4 mb-4 text-red-400 bg-red-900/30 border border-red-500/30 rounded-lg"
+      >
+        {{ errorMessage }}
+      </div>
+      <div v-if="users.length === 0" class="text-gray-400 text-center py-8">
+        No registered users
+      </div>
+      <div
+        v-else
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+      >
         <div
           v-for="user in users"
           :key="user._id"
-          class="p-4 bg-white rounded-lg shadow cursor-pointer hover:shadow-lg flex flex-col items-center"
           @click="goToUserDetails(user._id)"
-          style="width: 200px; height: 300px;"
+          class="bg-gray-700/50 rounded-lg p-4 border border-gray-600 hover:border-blue-500 cursor-pointer transition-all hover:shadow-lg"
         >
-          <!-- Bagian Gambar -->
-          <div class="flex-grow" style="flex: 7;">
-            <img
-              :src="`/images/${user.username}.jpg`"
-              alt="User Photo"
-              class="w-full h-full object-cover rounded-lg"
-              style="max-height: 70%;"
-            />
-          </div>
-          <!-- Bagian Teks -->
-          <div class="flex-grow text-center mt-2" style="flex: 3;">
-            <p class="font-semibold text-lg">{{ user.username }}</p>
+          <div class="flex items-center space-x-3">
+            <div class="bg-gray-600 rounded-full p-2">
+              <span class="material-icons-outlined text-gray-300">person</span>
+            </div>
+            <div>
+              <p class="font-medium text-gray-100">{{ user.username }}</p>
+              <p class="text-sm text-gray-400">
+                User ID: {{ user._id.slice(-4) }}
+              </p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -113,7 +189,8 @@ export default {
 
         if (!response.ok) {
           const errorData = await response.json();
-          errorMessage.value = errorData.message || "Failed to fetch room occupancy";
+          errorMessage.value =
+            errorData.message || "Failed to fetch room occupancy";
           return;
         }
 
@@ -160,7 +237,8 @@ export default {
 
         if (!response.ok) {
           const errorData = await response.json();
-          errorMessageRooms.value = errorData.message || "Failed to fetch rooms";
+          errorMessageRooms.value =
+            errorData.message || "Failed to fetch rooms";
           return;
         }
 
@@ -193,5 +271,7 @@ export default {
 </script>
 
 <style scoped>
-/* Tambahkan styling jika diperlukan */
+.material-icons-outlined {
+  font-size: 24px;
+}
 </style>
