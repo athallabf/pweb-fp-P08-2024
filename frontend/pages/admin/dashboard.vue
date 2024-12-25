@@ -1,15 +1,15 @@
 <template>
-  <div class="p-6 bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen">
-    <h1 class="text-3xl font-bold mb-8 text-gray-100 flex items-center">
-      <span class="material-icons-outlined mr-3 text-blue-400">dashboard</span>
+  <div class="p-6 bg-sky-200 min-h-screen">
+    <h1 class="text-3xl font-bold mb-8 text-sky-700 flex items-center">
+      <span class="material-icons-outlined mr-3 text-sky-700">dashboard</span>
       Dashboard Admin
     </h1>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
       <!-- Room Occupancy Stats -->
-      <div class="bg-gray-800 rounded-xl shadow-lg p-5 border border-gray-700">
-        <h2 class="text-xl font-semibold mb-4 text-gray-100 flex items-center">
-          <span class="material-icons-outlined mr-2 text-blue-400"
+      <div class="bg-sky-100 rounded-xl shadow-lg p-5">
+        <h2 class="text-xl font-semibold mb-4 text-sky-700 flex items-center">
+          <span class="material-icons-outlined mr-2 text-sky-700"
             >apartment</span
           >
           Room Occupancy
@@ -18,14 +18,14 @@
           <div
             class="bg-green-900/30 rounded-lg p-4 border border-green-500/30"
           >
-            <p class="text-green-400 text-sm mb-1">Empty Rooms</p>
-            <p class="text-2xl font-bold text-green-300">
+            <p class="text-teal-900 text-sm mb-1">Empty Rooms</p>
+            <p class="text-2xl font-bold text-teal-900">
               {{ roomOccupancy.empty }}
             </p>
           </div>
           <div class="bg-blue-900/30 rounded-lg p-4 border border-blue-500/30">
-            <p class="text-blue-400 text-sm mb-1">Filled Rooms</p>
-            <p class="text-2xl font-bold text-blue-300">
+            <p class="text-sky-900 text-sm mb-1">Filled Rooms</p>
+            <p class="text-2xl font-bold text-sky-900">
               {{ roomOccupancy.filled }}
             </p>
           </div>
