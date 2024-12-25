@@ -1,13 +1,12 @@
 // index.ts
+import cors from "cors";
 import express from "express";
 import { connectToDatabase } from "./db-connection";
-import { authRouter } from "./routes/home-route";
 import { Verification } from "./middleware/auth";
-import { penghuniRouter } from "./routes/penghuni-route";
-import {} from "./routes/penghuni-route";
 import adminRouter from "./routes/admin-route";
-import invoiceRoute from "./routes/invoiceRoute";
-import cors from "cors";
+import { authRouter } from "./routes/home-route";
+import invoiceRouter from "./routes/invoice-route";
+import { penghuniRouter } from "./routes/penghuni-route";
 
 const app = express();
 
@@ -29,7 +28,7 @@ app.get("/", (_, response) => {
 app.use("/", authRouter);
 app.use("/user", Verification, penghuniRouter);
 app.use("/admin", adminRouter);
-app.use("/api", invoiceRoute);
+app.use("/api", invoiceRouter);
 
 // Port yang digunakan untuk menjalankan server
 const PORT = 5000;

@@ -1,6 +1,6 @@
 import fs from "fs";
-import PDFDocument from "pdfkit";
 import path from "path";
+import PDFDocument from "pdfkit";
 
 const ensureInvoicesFolderExists = () => {
   const invoicesDir = path.resolve("./invoices");
@@ -26,16 +26,25 @@ export const generateInvoicePDF = (payment: any) => {
   doc.text(`Tanggal: ${new Date().toLocaleDateString()}`);
 
   // Informasi Metode Pembayaran
+  doc.moveDown();
+  doc.text("Detail Pembayaran:", { underline: true });
   if (payment.payment_method === "QRIS") {
     doc.text(`Metode Pembayaran: QRIS`);
   } else if (payment.payment_method === "BANK_TRANSFER") {
-    doc.text(`Metode Pembayaran: ${payment.bankName}`);
+    doc.text(`Metode Pembayaran: Transfer Bank`);
+    doc.text(`Nama Bank: ${payment.bank_name || "Tidak Disebutkan"}`);
   }
 
-  doc.text(`Jumlah Tagihan: Rp ${payment.total_bill}`);
+  doc.moveDown();
+  doc.text("Rincian Biaya:", { underline: true });
+  doc.text(`Total Tagihan: Rp ${payment.total_bill.toLocaleString("id-ID")}`);
   doc.text(`Periode Sewa: ${payment.rent_periods} bulan`);
+
+  // Footer
   doc.moveDown();
   doc.text("Terima kasih atas pembayaran Anda!", { align: "center" });
+  doc.text("Status: LUNAS", { align: "center" });
+
   doc.end();
 
   return new Promise<string>((resolve, reject) => {
