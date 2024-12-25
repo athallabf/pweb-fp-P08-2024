@@ -1,10 +1,10 @@
 <template>
   <div class="min-h-screen bg-[#FEF9F2]">
     <!-- Header -->
-    <header class="bg-[#FEF9F2] text-[#598bb5] py-6 text-center">
-      <h1 class="text-4xl font-extrabold">Fasilitas Kost 🏠</h1>
-      <p class="text-lg mt-2 font-medium">
-        Rasakan kenyamanan dan keamanan terbaik di kost kami
+    <header class="bg-[#FEF9F2] text-[#895159] py-6 text-center">
+      <h1 class="text-4xl font-extrabold">Fasilitas Kost</h1>
+      <p class="text-lg text-[#4d5c60] mt-2 font-medium">
+        Rasakan kenyamanan kos bintang lima dengan harga terjangkau hanya ada di kos P08
       </p>
     </header>
 
@@ -60,53 +60,48 @@
       <div
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-justify"
       >
-        <div class="bg-[#C9E9D2] bg-opacity-30 p-6 rounded-lg shadow-lg">
-          <h3 class="text-xl font-bold text-[#51829B]">
-            Kamar Nyaman dan Modern
+        <div class="bg-[#eef4ce] bg-opacity-30 p-6 rounded-lg shadow-lg">
+          <h3 class="text-xl font-bold text-[#895159]">
+            Kamar nyaman dengan desain yang modern
           </h3>
-          <p class="mt-2 text-gray-700">
-            Kamar tidur yang luas dengan tempat tidur nyaman, lemari besar, meja
-            belajar, dan kursi ergonomis. Setiap kamar juga dilengkapi dengan AC
-            untuk kenyamanan maksimal.
+          <p class="mt-2 text-[#4d5c60]">
+            Kamar tidur yang luas dengan perabotan mewah dan juga dilengkapi meja belajar yang luas. 
+            Setiap kamar juga dilengkapi dengan AC dan juga kamar mandi pribadi.
           </p>
         </div>
-        <div class="bg-[#C9E9D2] bg-opacity-30 p-6 rounded-lg shadow-lg">
-          <h3 class="text-xl font-bold text-[#51829B]">Kamar Mandi Pribadi</h3>
-          <p class="mt-2 text-gray-700">
-            Nikmati privasi dengan kamar mandi dalam yang bersih dan modern,
-            lengkap dengan shower air panas dan dingin.
+        <div class="bg-[#eef4ce] bg-opacity-30 p-6 rounded-lg shadow-lg">
+          <h3 class="text-xl font-bold text-[#895159]">Kamar Mandi Pribadi</h3>
+          <p class="mt-2 text-[#4d5c60]">
+            Setiap kamar dilengkapi dengan shower beserta water heater, toilet juga wastafel pribadi.
           </p>
         </div>
-        <div class="bg-[#C9E9D2] bg-opacity-30 p-6 rounded-lg shadow-lg">
-          <h3 class="text-xl font-bold text-[#51829B]">
-            Dapur Bersama yang Lengkap
+        <div class="bg-[#eef4ce] bg-opacity-30 p-6 rounded-lg shadow-lg">
+          <h3 class="text-xl font-bold text-[#895159]">
+            Dapur bersama yang lengkap dan minibar
           </h3>
-          <p class="mt-2 text-gray-700">
-            Dapur bersama yang dilengkapi dengan peralatan memasak lengkap,
-            termasuk kompor, microwave, kulkas, dan peralatan makan. Cocok untuk
-            kamu yang suka memasak!
+          <p class="mt-2 text-[#4d5c60]">
+            Dapur bersama yang dilengkapi dengan peralatan masak lengkap dan juga kulkas dua pintu, disertai minibar
+            untuk duduk bersama.
           </p>
         </div>
-        <div class="bg-[#C9E9D2] bg-opacity-30 p-6 rounded-lg shadow-lg">
-          <h3 class="text-xl font-bold text-[#51829B]">Layanan Laundry</h3>
-          <p class="mt-2 text-gray-700">
-            Fasilitas laundry dengan mesin cuci dan pengering yang bisa
-            digunakan kapan saja, atau layanan laundry yang siap membantu jika
-            kamu sibuk.
+        <div class="bg-[#eef4ce] bg-opacity-30 p-6 rounded-lg shadow-lg">
+          <h3 class="text-xl font-bold text-[#895159]">Layanan Laundry 24 jam</h3>
+          <p class="mt-2 text-[#4d5c60]">
+            Fasilitas laundry dengan mesin cuci dilengkapi dengan pengering dan ruang jemur yang luas.
           </p>
         </div>
-        <div class="bg-[#C9E9D2] bg-opacity-30 p-6 rounded-lg shadow-lg">
-          <h3 class="text-xl font-bold text-[#51829B]">
-            Internet Cepat dan Stabil
+        <div class="bg-[#eef4ce] bg-opacity-30 p-6 rounded-lg shadow-lg">
+          <h3 class="text-xl font-bold text-[#895159]">
+            Jaringan internet 3000 Mbps
           </h3>
-          <p class="mt-2 text-gray-700">
-            Akses Wi-Fi super cepat di seluruh area kost, ideal untuk bekerja,
+          <p class="mt-2 text-[#4d5c60]">
+            Nikmati akses Wi-Fi super cepat di seluruh area kost, ideal untuk bekerja,
             belajar, atau streaming film favoritmu.
           </p>
         </div>
-        <div class="bg-[#C9E9D2] bg-opacity-30 p-6 rounded-lg shadow-lg">
-          <h3 class="text-xl font-bold text-[#51829B]">Keamanan 24 Jam</h3>
-          <p class="mt-2 text-gray-700">
+        <div class="bg-[#eef4ce] bg-opacity-30 p-6 rounded-lg shadow-lg">
+          <h3 class="text-xl font-bold text-[#895159]">Keamanan 24 Jam</h3>
+          <p class="mt-2 text-[#4d5c60]">
             Sistem keamanan 24 jam dengan CCTV dan penjaga kost, memastikan kamu
             merasa aman dan nyaman setiap saat.
           </p>
