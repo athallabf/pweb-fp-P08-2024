@@ -1,7 +1,7 @@
-import { Request, Response } from "express";
-import { User } from "../models/home-model";
-import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import { Request, Response } from "express";
+import jwt from "jsonwebtoken";
+import { User } from "../models/home-model";
 
 export const Login = async (req: Request, res: Response) => {
   try {
@@ -62,7 +62,6 @@ export const Login = async (req: Request, res: Response) => {
       role: isUserAlreadyExist.role, // Ambil dari database
       token: token,
     });
-    
   } catch (error: any) {
     console.log(error);
     res.status(400).json({
