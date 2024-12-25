@@ -121,18 +121,18 @@
     </div>
 
     <!-- Registered Users -->
-    <div class="bg-gray-800 rounded-xl shadow-lg p-5 border border-gray-700">
-      <h2 class="text-xl font-semibold mb-4 text-gray-100 flex items-center">
-        <span class="material-icons-outlined mr-2 text-blue-400">group</span>
+    <div class="bg-sky-100 rounded-xl shadow-lg p-5">
+      <h2 class="text-xl font-semibold mb-4 text-sky-700 flex items-center">
+        <span class="material-icons-outlined mr-2 text-sky-700">group</span>
         Registered Users
       </h2>
       <div
         v-if="errorMessage"
-        class="p-4 mb-4 text-red-400 bg-red-900/30 border border-red-500/30 rounded-lg"
+        class="p-4 mb-4 text-red-400 bg-red-800/30 border border-red-500/30 rounded-lg"
       >
         {{ errorMessage }}
       </div>
-      <div v-if="users.length === 0" class="text-gray-400 text-center py-8">
+      <div v-if="users.length === 0" class="text-sky-900 text-center py-8">
         No registered users
       </div>
       <div
@@ -143,15 +143,15 @@
           v-for="user in users"
           :key="user._id"
           @click="goToUserDetails(user._id)"
-          class="bg-gray-700/50 rounded-lg p-4 border border-gray-600 hover:border-blue-500 cursor-pointer transition-all hover:shadow-lg"
+          class="bg-sky-700/50 rounded-lg p-4 border border-sky-600 hover:border-sky-100 cursor-pointer transition-all hover:shadow-lg"
         >
           <div class="flex items-center space-x-3">
-            <div class="bg-gray-600 rounded-full p-2">
-              <span class="material-icons-outlined text-gray-300">person</span>
+            <div class="bg-sky-900 rounded-full p-2">
+              <span class="material-icons-outlined text-sky-100">person</span>
             </div>
             <div>
               <p class="font-medium text-gray-100">{{ user.username }}</p>
-              <p class="text-sm text-gray-400">
+              <p class="text-sm text-sky-700">
                 User ID: {{ user._id.slice(-4) }}
               </p>
             </div>
