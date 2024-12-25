@@ -1,8 +1,8 @@
 <template>
-  <div class="p-6 bg-gray-100 min-h-screen">
+  <div class="p-6 bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen">
     <RouterLink
       to="/user"
-      class="inline-flex items-center mb-6 text-blue-600 hover:text-blue-800 transition-colors"
+      class="inline-flex items-center mb-6 text-gray-300 hover:text-gray-100 transition-colors"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -20,46 +20,73 @@
       </svg>
       Back to Dashboard
     </RouterLink>
-    <h1 class="text-3xl font-bold mb-6 text-blue-600">Pembayaran</h1>
+    <h1 class="text-3xl font-bold mb-6 text-gray-100">Pembayaran</h1>
 
     <!-- Detail Pembayaran -->
-    <div class="bg-white rounded-lg shadow p-4 mb-6">
-      <h2 class="text-xl font-semibold mb-4 text-blue-600">
+    <div
+      class="bg-gray-800 rounded-xl shadow-lg p-5 mb-6 border border-gray-700"
+    >
+      <h2 class="text-xl font-semibold mb-4 text-gray-100 flex items-center">
+        <span class="material-icons-outlined mr-2">receipt</span>
         Detail Perhitungan
       </h2>
-      <p><strong>Periode Sewa:</strong> {{ rentalDetails.period }} bulan</p>
-      <p>
-        <strong>Total Biaya Seluruhnya:</strong> Rp
+      <p class="text-gray-300">
+        <strong class="text-gray-100">Periode Sewa:</strong>
+        {{ rentalDetails.period }} bulan
+      </p>
+      <p class="text-gray-300">
+        <strong class="text-gray-100">Total Biaya Seluruhnya:</strong> Rp
         {{ formatCurrency(rentalDetails.total) }}
       </p>
     </div>
 
     <!-- Status Pembayaran -->
-    <div v-if="showPaymentStatus" class="bg-white rounded-lg shadow p-4 mb-6">
-      <h2 class="text-xl font-semibold mb-4 text-blue-600">
+    <div
+      v-if="showPaymentStatus"
+      class="bg-gray-800 rounded-xl shadow-lg p-5 mb-6 border border-gray-700"
+    >
+      <h2 class="text-xl font-semibold mb-4 text-gray-100 flex items-center">
+        <span class="material-icons-outlined mr-2">payments</span>
         Status Pembayaran
       </h2>
-      <p><strong>Tanggal Pembayaran:</strong> {{ formattedPaymentDate }}</p>
-      <p>
-        <strong>Status:</strong> {{ paymentStatus?.status || "Belum Lunas" }}
+      <p class="text-gray-300">
+        <strong class="text-gray-100">Tanggal Pembayaran:</strong>
+        {{ formattedPaymentDate }}
       </p>
-      <!-- Tombol Download Invoice -->
-      <button
-        v-if="paymentStatus?.status === 'Lunas' && invoiceUrl"
-        @click="downloadInvoice"
-        class="mt-4 bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition"
-      >
-        Download Invoice PDF
-      </button>
+      <p class="text-gray-300">
+        <strong class="text-gray-100">Status:</strong>
+        <span
+          :class="{
+            'px-3 py-1 rounded-full text-sm font-medium ml-2': true,
+            'bg-emerald-900/50 text-emerald-400 border border-emerald-500/30':
+              paymentStatus?.status === 'Lunas',
+            'bg-red-900/50 text-red-400 border border-red-500/30':
+              paymentStatus?.status === 'Belum Lunas',
+          }"
+        >
+          {{ paymentStatus?.status || "Belum Lunas" }}
+        </span>
+      </p>
 
-      <div v-if="invoiceUrl" class="mt-4">
-        <!-- Link untuk membuka invoice di tab baru dengan tampilan tombol hijau -->
+      <!-- Tombol Download Invoice -->
+      <div class="mt-6 space-y-4">
+        <button
+          v-if="paymentStatus?.status === 'Lunas' && invoiceUrl"
+          @click="downloadInvoice"
+          class="w-full md:w-auto bg-emerald-600 text-white py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors flex items-center justify-center"
+        >
+          <span class="material-icons-outlined mr-2">download</span>
+          Download Invoice PDF
+        </button>
+
         <a
+          v-if="invoiceUrl"
           :href="invoiceUrl"
           target="_blank"
-          class="text-white bg-green-500 hover:bg-green-700 py-2 px-4 rounded-md mb-4"
+          class="w-full md:w-auto inline-flex items-center justify-center bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 py-2 px-6 rounded-lg hover:bg-emerald-600/30 transition-colors"
         >
-          Klik di sini untuk melihat invoice
+          <span class="material-icons-outlined mr-2">visibility</span>
+          Lihat Invoice
         </a>
       </div>
     </div>
@@ -67,33 +94,40 @@
     <!-- Form Pembayaran -->
     <div
       v-if="!paymentStatus || paymentStatus.status === 'Belum Lunas'"
-      class="bg-white rounded-lg shadow p-4"
+      class="bg-gray-800 rounded-xl shadow-lg p-5 border border-gray-700"
     >
-      <h2 class="text-xl font-semibold mb-4 text-blue-600">Form Pembayaran</h2>
-      <form @submit.prevent="submitPayment">
+      <h2 class="text-xl font-semibold mb-4 text-gray-100 flex items-center">
+        <span class="material-icons-outlined mr-2">payment</span>
+        Form Pembayaran
+      </h2>
+      <form @submit.prevent="submitPayment" class="space-y-6">
         <!-- Pilihan Metode Pembayaran -->
-        <div class="mb-4">
-          <label class="block text-gray-700 font-medium mb-2"
+        <div>
+          <label class="block text-gray-300 font-medium mb-2"
             >Metode Pembayaran</label
           >
           <select
             v-model="paymentMethod"
-            class="w-full border rounded-lg p-2"
+            class="w-full bg-gray-700 border border-gray-600 rounded-lg p-3 text-gray-100 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
             required
           >
-            <option value="" disabled>Pilih Metode Pembayaran</option>
-            <option value="QRIS">QRIS</option>
-            <option value="BANK_TRANSFER">Transfer Bank</option>
+            <option value="" disabled class="bg-gray-700">
+              Pilih Metode Pembayaran
+            </option>
+            <option value="QRIS" class="bg-gray-700">QRIS</option>
+            <option value="BANK_TRANSFER" class="bg-gray-700">
+              Transfer Bank
+            </option>
           </select>
         </div>
 
         <!-- Input Nama Bank -->
-        <div v-if="paymentMethod === 'BANK_TRANSFER'" class="mb-4">
-          <label class="block text-gray-700 font-medium mb-2">Nama Bank</label>
+        <div v-if="paymentMethod === 'BANK_TRANSFER'">
+          <label class="block text-gray-300 font-medium mb-2">Nama Bank</label>
           <input
             type="text"
             v-model="bankName"
-            class="w-full border rounded-lg p-2"
+            class="w-full bg-gray-700 border border-gray-600 rounded-lg p-3 text-gray-100 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
             placeholder="Masukkan nama bank"
             required
           />
@@ -102,9 +136,11 @@
         <!-- Tombol Submit -->
         <button
           type="submit"
-          class="bg-blue-600 text-white py-2 px-4 rounded"
+          class="w-full md:w-auto bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center"
           :disabled="!paymentMethod"
+          :class="{ 'opacity-50 cursor-not-allowed': !paymentMethod }"
         >
+          <span class="material-icons-outlined mr-2">check_circle</span>
           Submit Pembayaran
         </button>
       </form>
@@ -222,9 +258,6 @@ export default {
     };
 
     const submitPayment = async () => {
-      console.log("Bank Name:", bankName.value);
-      console.log("Payment Method:", paymentMethod.value); // Debugging untuk memastikan kondisi
-
       try {
         const token = localStorage.getItem("token");
         if (!token) {
@@ -266,8 +299,6 @@ export default {
       } catch (error) {
         console.error("Error submitting payment:", error);
         alert(`Pembayaran gagal: ${error.message}`);
-
-        console.log("Payment Data:", paymentData);
       }
     };
 
@@ -307,18 +338,14 @@ export default {
             throw new Error("Gagal membaca file PDF");
           };
         } else {
-          // Create a temporary URL for the blob
           const url = URL.createObjectURL(blob);
-
-          // Trigger the download using a hidden anchor element
           const link = document.createElement("a");
           link.href = url;
-          link.download = `invoice-${new Date().toISOString()}.pdf`; // Generate a unique filename
+          link.download = `invoice-${new Date().toISOString()}.pdf`;
           link.style.display = "none";
           document.body.appendChild(link);
           link.click();
 
-          // Cleanup the temporary URL after a short delay
           setTimeout(() => {
             URL.revokeObjectURL(url);
             document.body.removeChild(link);
@@ -348,19 +375,16 @@ export default {
 </script>
 
 <style scoped>
-/* Styling untuk membuat link seperti tombol */
-.btn-green {
-  background-color: #38a169; /* Hijau */
-  color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  text-align: center;
+/* Remove the old styles and add these new ones */
+select option {
+  @apply bg-gray-700 text-gray-100;
 }
 
-.btn-green:hover {
-  background-color: #2f855a; /* Hijau lebih gelap saat hover */
+input::placeholder {
+  @apply text-gray-400;
+}
+
+button:disabled {
+  @apply cursor-not-allowed opacity-50;
 }
 </style>

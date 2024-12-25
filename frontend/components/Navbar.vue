@@ -136,7 +136,7 @@ export default {
         <div class="relative ml-3">
           <div class="flex items-center">
             <p class="text-white mx-5">
-              {{ userName }} as {{ userRole.toUpperCase() }}
+              Hello, {{ userName }} ({{ userRole.toUpperCase() }}) !
             </p>
             <button
               type="button"
