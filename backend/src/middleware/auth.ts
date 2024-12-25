@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import { NextFunction, Request, Response } from "express";
+import jwt from "jsonwebtoken";
 import { User } from "../models/home-model";
 
 dotenv.config();
@@ -36,6 +36,14 @@ export async function Verification(
     if (!user) {
       throw new Error("User not found");
     }
+
+    // Attach user to request object
+    req.user = {
+      _id: user._id.toString(),
+      username: user.username,
+      role: user.role,
+    };
+
     next();
   } catch (error) {
     res.status(401).send({

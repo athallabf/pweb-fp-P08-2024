@@ -76,37 +76,39 @@ export const createDamageReport = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const { message, username } = req.body; // Ambil message dan username dari request body
+  const { message } = req.body;
+  const userId = req.user?._id; // Change from .id to ._id to match MongoDB's ID format
 
   try {
-    // Cari pengguna berdasarkan username (atau nama) yang diberikan di request body
-    const user = await User.findOne({ username });
-
-    if (!user) {
-      res.status(404).json({ message: "User not found" });
+    if (!message) {
+      res.status(400).json({ message: "Message is required" });
       return;
     }
 
-    // Buat laporan kerusakan dengan menggunakan ID pengguna
+    if (!userId) {
+      res.status(401).json({ message: "User not authenticated" });
+      return;
+    }
+
     const newReport = new DamageReporting({
-      user: user._id, // Menyimpan ID pengguna (referensi ke model User)
+      user: userId,
       message,
     });
 
-    // Simpan laporan kerusakan ke database
     await newReport.save();
 
-    // Kembalikan respons sukses dengan message dan nama pengguna
     res.status(201).json({
       message: "Damage report created successfully",
       report: {
         message: newReport.message,
-        user: user.username, // Menambahkan nama pengguna pada respons
       },
     });
   } catch (error) {
-    // Tangani error jika ada
-    res.status(500).json({ message: "Error creating damage report", error });
+    console.error("Error creating damage report:", error);
+    res.status(500).json({
+      message: "Error creating damage report",
+      error: error instanceof Error ? error.message : "Unknown error",
+    });
   }
 };
 
