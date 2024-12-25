@@ -71,10 +71,10 @@
 
     <!-- Room List -->
     <div
-      class="bg-gray-800 rounded-xl shadow-lg p-5 mb-8 border border-gray-700"
+      class="bg-sky-100 rounded-xl shadow-lg p-5 mb-8"
     >
-      <h2 class="text-xl font-semibold mb-4 text-gray-100 flex items-center">
-        <span class="material-icons-outlined mr-2 text-blue-400"
+      <h2 class="text-xl font-semibold mb-4 text-sky-700 flex items-center">
+        <span class="material-icons-outlined mr-2 text-sky-700"
           >meeting_room</span
         >
         Room List
@@ -95,25 +95,25 @@
         <div
           v-for="room in rooms"
           :key="room._id"
-          class="bg-gray-700/50 rounded-lg p-4 border border-gray-600 hover:border-gray-500 transition-colors"
+          class="bg-sky-700/50 rounded-lg p-4 border border-sky-600 hover:border-sky-100 transition-all cursor-pointer"
         >
           <div class="flex items-center justify-between mb-2">
-            <span class="material-icons-outlined text-gray-400"
+            <span class="material-icons-outlined text-sky-900"
               >door_front</span
             >
             <span
               :class="{
                 'px-2 py-1 text-xs rounded-full': true,
-                'bg-green-900/50 text-green-400 border border-green-500/30':
+                'bg-green-800/50 text-green-400 border border-green-500/30':
                   room.status === 'EMPTY',
-                'bg-red-900/50 text-red-400 border border-red-500/30':
+                'bg-red-800/50 text-red-400 border border-red-500/30':
                   room.status === 'FILLED',
               }"
             >
               {{ room.status }}
             </span>
           </div>
-          <p class="text-lg font-medium text-gray-100">
+          <p class="text-lg font-medium text-sky-100">
             Room {{ room.room_number }}
           </p>
         </div>
