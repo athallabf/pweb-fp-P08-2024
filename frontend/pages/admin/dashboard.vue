@@ -16,14 +16,14 @@
         </h2>
         <div class="grid grid-cols-2 gap-4">
           <div
-            class="bg-green-900/30 rounded-lg p-4 border border-green-500/30"
+            class="bg-green-900/30 rounded-lg p-4 border border-green-500/30 hover:border-sky-100"
           >
             <p class="text-teal-900 text-sm mb-1">Empty Rooms</p>
             <p class="text-2xl font-bold text-teal-900">
               {{ roomOccupancy.empty }}
             </p>
           </div>
-          <div class="bg-blue-900/30 rounded-lg p-4 border border-blue-500/30">
+          <div class="bg-blue-900/30 rounded-lg p-4 border border-blue-500/30 hover:border-sky-100">
             <p class="text-sky-900 text-sm mb-1">Filled Rooms</p>
             <p class="text-2xl font-bold text-sky-900">
               {{ roomOccupancy.filled }}
@@ -41,7 +41,7 @@
         <div class="grid grid-cols-2 gap-4">
           <router-link
             to="/admin/laporan/fasilitas"
-            class="flex items-center p-4 bg-sky-700/50 rounded-lg hover:bg-sky-700 transition-colors group"
+            class="flex items-center p-4 bg-sky-700/50 rounded-lg border border-sky-600 hover:border-sky-100 cursor-pointer transition-all hover:shadow-lg"
           >
             <span
               class="material-icons-outlined text-sky-900 group-hover:text-gray-100 mr-2"
@@ -54,7 +54,7 @@
           </router-link>
           <router-link
             to="/admin/laporan/penghuni"
-            class="flex items-center p-4 bg-sky-700/50 rounded-lg hover:bg-sky-700 transition-colors group"
+            class="flex items-center p-4 bg-sky-700/50 rounded-lg border border-sky-600 hover:border-sky-100 cursor-pointer transition-all hover:shadow-lg"
           >
             <span
               class="material-icons-outlined text-sky-900 group-hover:text-gray-100 mr-2"
@@ -95,7 +95,7 @@
         <div
           v-for="room in rooms"
           :key="room._id"
-          class="bg-sky-700/50 rounded-lg p-4 border border-sky-600 hover:border-sky-100 transition-all cursor-pointer"
+          class="bg-sky-700/50 rounded-lg p-4 border border-sky-600 hover:border-sky-100 cursor-pointer transition-all hover:shadow-lg"
         >
           <div class="flex items-center justify-between mb-2">
             <span class="material-icons-outlined text-sky-900"
