@@ -34,6 +34,13 @@
                   <p class="font-medium text-gray-100">
                     Rp {{ bill.total.toLocaleString("id-ID") }}
                   </p>
+                  <p class="text-sm text-gray-400">
+                    {{
+                      bill.payment_method === "BANK_TRANSFER"
+                        ? "Transfer Bank"
+                        : "QRIS"
+                    }}
+                  </p>
                 </div>
                 <span
                   :class="{
@@ -87,7 +94,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { onMounted, ref } from "vue";
 
 export default {
   name: "UserDashboard",
@@ -109,7 +116,7 @@ export default {
     const fetchBillingHistory = async () => {
       const token = localStorage.getItem("token");
       try {
-        const response = await fetch("http://localhost:5000/user", {
+        const response = await fetch("http://localhost:5000/user/payments", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -119,11 +126,12 @@ export default {
 
         const data = await response.json();
 
-        // Transformasi data agar sesuai dengan template
+        // Data is already formatted from the backend
         billingHistory.value = data.map((item) => ({
-          total: item.bill,
-          date: new Date(item.created_at).toLocaleDateString("id-ID"),
-          status: item.bill > 10000000 ? "Lunas" : "Belum Lunas", // Sesuaikan logika status
+          total: item.total,
+          date: new Date(item.date).toLocaleDateString("id-ID"),
+          status: item.status,
+          payment_method: item.payment_method,
         }));
       } catch (error) {
         errorMessage.value = "Gagal mengambil data tagihan. Silakan coba lagi.";

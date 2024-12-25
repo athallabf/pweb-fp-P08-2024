@@ -228,13 +228,12 @@
           path: '/user/sewa/bayar',
           query: {
             period: rentalPeriod,
-            laundry: selectedFeatures.laundry,
-            cleaning: selectedFeatures.cleaning,
-            catering: selectedFeatures.catering,
             total: totalCost,
           },
         }"
         class="inline-flex items-center bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors"
+        :class="{ 'opacity-50 cursor-not-allowed': !rentalPeriod }"
+        :disabled="!rentalPeriod"
       >
         <span class="material-icons-outlined mr-2">arrow_forward</span>
         Lanjutkan ke Pembayaran
@@ -244,7 +243,7 @@
 </template>
 
 <script>
-import { ref, computed } from "vue";
+import { computed, ref } from "vue";
 
 export default {
   name: "SewaKamar",

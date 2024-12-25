@@ -1,11 +1,170 @@
+<template>
+  <nav class="bg-gray-900 border-b border-gray-800">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="relative flex h-16 items-center justify-between">
+        <!-- Mobile menu toggle -->
+        <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+          <button
+            type="button"
+            @click="toggleMobileMenu"
+            class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-800 hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+          >
+            <span class="sr-only">Open main menu</span>
+            <span class="material-icons-outlined">
+              {{ isMobileMenuOpen ? "close" : "menu" }}
+            </span>
+          </button>
+        </div>
+
+        <!-- Main navigation -->
+        <div
+          class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start"
+        >
+          <div class="hidden sm:ml-6 sm:block">
+            <div class="flex space-x-4 items-center">
+              <router-link
+                to="/"
+                class="text-blue-400 font-bold text-xl px-3 py-1.5 flex items-center"
+              >
+                <span class="material-icons-outlined mr-2">apartment</span>
+                P08
+              </router-link>
+              <router-link
+                to="/"
+                class="rounded-md px-3 py-2 text-sm font-medium transition-colors flex items-center"
+                :class="{
+                  'bg-gray-800 text-gray-100': $route.path === '/',
+                  'text-gray-300 hover:bg-gray-800 hover:text-gray-100':
+                    $route.path !== '/',
+                }"
+              >
+                <span class="material-icons-outlined mr-2">home</span>
+                Home
+              </router-link>
+              <router-link
+                to="/facility"
+                class="rounded-md px-3 py-2 text-sm font-medium transition-colors flex items-center"
+                :class="{
+                  'bg-gray-800 text-gray-100': $route.path === '/facility',
+                  'text-gray-300 hover:bg-gray-800 hover:text-gray-100':
+                    $route.path !== '/facility',
+                }"
+              >
+                <span class="material-icons-outlined mr-2">meeting_room</span>
+                Facility
+              </router-link>
+              <router-link
+                to="/rules"
+                class="rounded-md px-3 py-2 text-sm font-medium transition-colors flex items-center"
+                :class="{
+                  'bg-gray-800 text-gray-100': $route.path === '/rules',
+                  'text-gray-300 hover:bg-gray-800 hover:text-gray-100':
+                    $route.path !== '/rules',
+                }"
+              >
+                <span class="material-icons-outlined mr-2">gavel</span>
+                Rules
+              </router-link>
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile dropdown -->
+        <div class="relative ml-3">
+          <div class="flex items-center">
+            <p class="text-gray-300 mx-5 hidden md:block">
+              Hello,
+              <span class="text-gray-100 font-medium">{{ userName }}</span>
+              <span class="text-gray-400">({{ userRole.toUpperCase() }})</span>
+            </p>
+            <button
+              type="button"
+              @click="toggleDropdown"
+              class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800"
+            >
+              <span class="sr-only">Open user menu</span>
+              <div
+                class="size-8 rounded-full bg-gray-700 flex items-center justify-center"
+              >
+                <span class="material-icons-outlined text-gray-300"
+                  >person</span
+                >
+              </div>
+            </button>
+          </div>
+          <div
+            v-if="isDropdownOpen"
+            class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-gray-800 py-1 shadow-lg ring-1 ring-black/5 focus:outline-none"
+          >
+            <a
+              href="#"
+              class="flex items-center px-4 py-2 text-sm text-gray-300 hover:bg-gray-700"
+            >
+              <span class="material-icons-outlined mr-2">person_outline</span>
+              Your Profile
+            </a>
+            <a
+              href="#"
+              class="flex items-center px-4 py-2 text-sm text-gray-300 hover:bg-gray-700"
+            >
+              <span class="material-icons-outlined mr-2">settings</span>
+              Settings
+            </a>
+            <a
+              href="/"
+              class="flex items-center px-4 py-2 text-sm text-gray-300 hover:bg-gray-700"
+              @click="handleSignOut"
+            >
+              <span class="material-icons-outlined mr-2">logout</span>
+              Sign out
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div v-if="isMobileMenuOpen" class="sm:hidden">
+      <div class="space-y-1 px-2 pb-3 pt-2">
+        <router-link
+          v-for="item in mobileMenuItems"
+          :key="item.path"
+          :to="item.path"
+          class="flex items-center rounded-md px-3 py-2 text-base font-medium transition-colors"
+          :class="{
+            'bg-gray-800 text-gray-100': $route.path === item.path,
+            'text-gray-300 hover:bg-gray-800 hover:text-gray-100':
+              $route.path !== item.path,
+          }"
+        >
+          <span class="material-icons-outlined mr-2">{{ item.icon }}</span>
+          {{ item.name }}
+        </router-link>
+      </div>
+    </div>
+  </nav>
+</template>
+
 <script>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed } from "vue";
 import { useUserStore } from "../stores/store";
 
 export default {
   setup() {
     const isDropdownOpen = ref(false);
     const isMobileMenuOpen = ref(false);
+    const userStore = useUserStore();
+
+    const mobileMenuItems = [
+      { name: "Home", path: "/", icon: "home" },
+      { name: "Facility", path: "/facility", icon: "meeting_room" },
+      { name: "Rules", path: "/rules", icon: "gavel" },
+    ];
+
+    const userName = computed(
+      () => localStorage.getItem("username") || "Guest"
+    );
+    const userRole = computed(() => localStorage.getItem("role") || "GUEST");
 
     const toggleDropdown = () => {
       isDropdownOpen.value = !isDropdownOpen.value;
@@ -15,16 +174,8 @@ export default {
       isMobileMenuOpen.value = !isMobileMenuOpen.value;
     };
 
-    const userStore = useUserStore();
-
-    // Menggunakan computed untuk mengambil data dari localStorage
-    const userName = computed(
-      () => localStorage.getItem("username") || "Guest"
-    );
-    const userRole = computed(() => localStorage.getItem("role") || "GUEST");
-
     const handleSignOut = () => {
-      userStore.clearUser(); // Reset user data
+      userStore.clearUser();
     };
 
     return {
@@ -32,6 +183,7 @@ export default {
       userRole,
       isDropdownOpen,
       isMobileMenuOpen,
+      mobileMenuItems,
       toggleDropdown,
       toggleMobileMenu,
       handleSignOut,
@@ -39,184 +191,3 @@ export default {
   },
 };
 </script>
-
-<template>
-  <nav class="bg-[#0f172a]">
-    <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-      <div class="relative flex h-16 items-center justify-between">
-        <!-- Mobile menu toggle -->
-        <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-          <button
-            type="button"
-            @click="toggleMobileMenu"
-            class="relative inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-[#80BCBD] hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-          >
-            <span class="sr-only">Open main menu</span>
-            <svg
-              v-if="!isMobileMenuOpen"
-              class="block size-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-              />
-            </svg>
-            <svg
-              v-else
-              class="block size-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
-
-        <!-- Main navigation -->
-        <div
-          class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start"
-        >
-          <div class="hidden sm:ml-6 sm:block">
-            <div class="flex space-x-4">
-              <a class="text-gray-200 font-bold text-xl px-3 py-1.5"> P08 </a>
-              <a
-                href="/"
-                class="rounded-md px-3 py-2 text-md font-medium"
-                :class="{
-                  'text-[white] hover:bg-[#80BCBD]': $route.path === '/',
-                  'text-gray-300 hover:bg-[#04a268] hover:text-white':
-                    $route.path !== '/',
-                }"
-                aria-current="$route.path === '/' ? 'page' : null"
-              >
-                Home
-              </a>
-              <a
-                href="/facility"
-                class="rounded-md px-3 py-2 text-md font-medium"
-                :class="{
-                  'text-white hover:bg-[#80BCBD]': $route.path === '/facility',
-                  'text-gray-300 hover:bg-[#04a268] hover:text-white':
-                    $route.path !== '/facility',
-                }"
-                aria-current="$route.path === '/facility' ? 'page' : null"
-              >
-                Facility
-              </a>
-              <a
-                href="/rules"
-                class="rounded-md px-3 py-2 text-md font-medium"
-                :class="{
-                  'text-white hover:bg-[#80BCBD]': $route.path === '/rules',
-                  'text-gray-300 hover:bg-[#04a268] hover:text-white':
-                    $route.path !== '/rules',
-                }"
-                aria-current="$route.path === '/rules' ? 'page' : null"
-              >
-                Rules
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Profile dropdown -->
-        <div class="relative ml-3">
-          <div class="flex items-center">
-            <p class="text-white mx-5">
-              Hello, {{ userName }} ({{ userRole.toUpperCase() }}) !
-            </p>
-            <button
-              type="button"
-              @click="toggleDropdown"
-              class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-              id="user-menu-button"
-            >
-              <span class="sr-only">Open user menu</span>
-              <img
-                class="size-8 rounded-full"
-                src="https://static.vecteezy.com/system/resources/thumbnails/005/544/718/small_2x/profile-icon-design-free-vector.jpg"
-                alt=""
-              />
-            </button>
-          </div>
-          <div
-            v-if="isDropdownOpen"
-            class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none"
-            role="menu"
-          >
-            <a href="#" class="block px-4 py-2 text-sm text-gray-700"
-              >Your Profile</a
-            >
-            <a href="#" class="block px-4 py-2 text-sm text-gray-700"
-              >Settings</a
-            >
-            <a
-              href="/"
-              class="block px-4 py-2 text-sm text-gray-700"
-              @click="handleSignOut"
-              aria-current="$route.path === '/' ? 'page' : null"
-            >
-              Sign out
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Mobile menu -->
-    <div v-if="isMobileMenuOpen" class="sm:hidden" id="mobile-menu">
-      <div class="space-y-1 px-2 pb-3 pt-2">
-        <a
-          href="/"
-          class="block rounded-md px-3 py-2 text-base font-medium"
-          :class="{
-            'bg-[#82A0D8] bg-opacity-40 text-white': $route.path === '/',
-            'text-gray-300 hover:bg-[#80BCBD] hover:text-white':
-              $route.path !== '/',
-          }"
-          aria-current="$route.path === '/' ? 'page' : null"
-        >
-          Home
-        </a>
-        <a
-          href="/facility"
-          class="block rounded-md px-3 py-2 text-base font-medium"
-          :class="{
-            'bg-[#82A0D8] bg-opacity-20 text-white':
-              $route.path === '/facility',
-            'text-gray-300 hover:bg-[#80BCBD] hover:text-white':
-              $route.path !== '/facility',
-          }"
-          aria-current="$route.path === '/facility' ? 'page' : null"
-        >
-          Facility
-        </a>
-        <a
-          href="/rules"
-          class="block rounded-md px-3 py-2 text-base font-medium"
-          :class="{
-            'bg-[#82A0D8] bg-opacity-20 text-white': $route.path === '/rules',
-            'text-gray-300 hover:bg-[#80BCBD] hover:text-white':
-              $route.path !== '/rules',
-          }"
-          aria-current="$route.path === '/rules' ? 'page' : null"
-        >
-          Rules
-        </a>
-      </div>
-    </div>
-  </nav>
-</template>
