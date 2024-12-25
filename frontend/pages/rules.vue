@@ -45,7 +45,7 @@
             <div
               v-for="(item, index) in rules"
               :key="index"
-              class="bg-[white border] border-[#374375] p-6 rounded-lg shadow-sm flex items-start"
+              class="bg-[#fcf3e3] border-[#374375] p-6 rounded-lg shadow-sm flex items-start"
             >
               <component
                 :is="item.icon"
