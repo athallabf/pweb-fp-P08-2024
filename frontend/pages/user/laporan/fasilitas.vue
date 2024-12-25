@@ -1,68 +1,66 @@
 <template>
-  <div class="p-6 bg-gray-100 min-h-screen">
+  <div class="p-6 bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen">
+    <!-- Back Button -->
     <RouterLink
       to="/user"
-      class="inline-flex items-center mb-6 text-blue-600 hover:text-blue-800 transition-colors"
+      class="inline-flex items-center mb-6 text-gray-300 hover:text-gray-100 transition-colors"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-5 w-5 mr-2"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M10 19l-7-7m0 0l7-7m-7 7h18"
-        />
-      </svg>
+      <span class="material-icons-outlined mr-2">arrow_back</span>
       Back to Dashboard
     </RouterLink>
-    <h1 class="text-3xl font-bold mb-6 text-blue-600">
-      Laporan Kerusakan Fasilitas
-    </h1>
 
-    <!-- Form Pelaporan Kerusakan -->
-    <div class="bg-white rounded-lg shadow p-4 mb-6">
-      <h2 class="text-xl font-semibold mb-4 text-blue-600">
+    <h1 class="text-3xl font-bold mb-6 text-gray-100">Laporan Fasilitas</h1>
+
+    <!-- Form Laporan -->
+    <div class="bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-700">
+      <h2 class="text-xl font-semibold mb-4 text-gray-100 flex items-center">
+        <span class="material-icons-outlined mr-2">build</span>
         Form Laporan Kerusakan
       </h2>
 
-      <form @submit.prevent="submitReport">
-        <div class="mb-4">
-          <label for="username" class="block text-sm font-medium text-gray-700"
-            >Nama</label
-          >
-          <input
-            type="text"
-            id="username"
-            v-model="username"
-            class="mt-1 block w-full p-2 border border-gray-300 rounded"
-            required
-          />
-        </div>
-
-        <div class="mb-4">
-          <label for="message" class="block text-sm font-medium text-gray-700"
-            >Pesan Laporan</label
-          >
+      <form @submit.prevent="submitReport" class="space-y-6">
+        <!-- Message Input -->
+        <div>
+          <label for="message" class="block text-gray-300 font-medium mb-2">
+            Deskripsi Kerusakan
+          </label>
           <textarea
             id="message"
             v-model="message"
-            class="mt-1 block w-full p-2 border border-gray-300 rounded"
             rows="4"
+            class="w-full bg-gray-700 border border-gray-600 rounded-lg p-3 text-gray-100 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            placeholder="Jelaskan detail kerusakan yang perlu diperbaiki..."
             required
           ></textarea>
         </div>
 
+        <!-- Submit Button -->
         <button
           type="submit"
-          class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700"
+          class="w-full md:w-auto bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center space-x-2"
+          :disabled="isSubmitting"
         >
-          Kirim Laporan
+          <span class="material-icons-outlined">send</span>
+          <span>{{ isSubmitting ? "Mengirim..." : "Kirim Laporan" }}</span>
         </button>
+
+        <!-- Success Message -->
+        <div
+          v-if="showSuccess"
+          class="p-4 bg-emerald-900/30 border border-emerald-500/30 rounded-lg text-emerald-400 flex items-center"
+        >
+          <span class="material-icons-outlined mr-2">check_circle</span>
+          Laporan berhasil dikirim!
+        </div>
+
+        <!-- Error Message -->
+        <div
+          v-if="error"
+          class="p-4 bg-red-900/30 border border-red-500/30 rounded-lg text-red-400 flex items-center"
+        >
+          <span class="material-icons-outlined mr-2">error</span>
+          {{ error }}
+        </div>
       </form>
     </div>
   </div>
@@ -72,46 +70,66 @@
 import { ref } from "vue";
 
 export default {
-  name: "DamageReport",
+  name: "FacilityReport",
   setup() {
-    const username = ref("");
     const message = ref("");
+    const isSubmitting = ref(false);
+    const showSuccess = ref(false);
+    const error = ref("");
 
     const submitReport = async () => {
-      const token = localStorage.getItem("token");
+      if (!message.value.trim()) {
+        error.value = "Mohon isi deskripsi kerusakan";
+        return;
+      }
+
+      isSubmitting.value = true;
+      error.value = "";
+      showSuccess.value = false;
+
       try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("Token tidak ditemukan. Silakan login kembali.");
+        }
+
         const response = await fetch(
           "http://localhost:5000/user/laporan/fasilitas",
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`, // Pastikan mengirimkan token autentikasi
+              Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify({
-              username: username.value,
-              message: message.value,
-            }),
+            body: JSON.stringify({ message: message.value }),
           }
         );
 
-        if (response.ok) {
-          const data = await response.json();
-          alert("Laporan berhasil dikirim: " + data.message);
-          // Reset form setelah pengiriman
-          username.value = "";
-          message.value = "";
-        } else {
+        if (!response.ok) {
           const errorData = await response.json();
-          alert("Error: " + errorData.message);
+          throw new Error(errorData.message || "Gagal mengirim laporan");
         }
-      } catch (error) {
-        console.error("Gagal mengirim laporan", error);
-        alert("Terjadi kesalahan, coba lagi nanti.");
+
+        message.value = "";
+        showSuccess.value = true;
+        setTimeout(() => {
+          showSuccess.value = false;
+        }, 3000);
+      } catch (err) {
+        console.error("Error submitting report:", err);
+        error.value = err.message || "Terjadi kesalahan saat mengirim laporan";
+      } finally {
+        isSubmitting.value = false;
       }
     };
 
-    return { username, message, submitReport };
+    return {
+      message,
+      isSubmitting,
+      showSuccess,
+      error,
+      submitReport,
+    };
   },
 };
 </script>
